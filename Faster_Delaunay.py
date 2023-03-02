@@ -20,10 +20,10 @@ def separating(coordinates):
     return final_data
 
 
-def delauney_boundary(coordinates):
+def delaunay_boundary(coordinates):
     """
-    This function recieves the dictionary, sorts it by colour and distance form the car (blue cones first and yellow cones after). 
-    Then it outputs the delauney triangularization deleting that triangle that would be outside of the track.
+    This function receives the dictionary, sorts it by colour and distance form the car (blue cones first and yellow
+    cones after). Then it outputs the delaunay triangularization deleting that triangle that would be outside the track.
     """
 
     coordinates.sort(key=lambda x: (x["Label"], x["Ypos"] ** 2 + x["Xpos"] ** 2))

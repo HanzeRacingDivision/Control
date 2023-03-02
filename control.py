@@ -1,4 +1,4 @@
-from Faster_Delaunay import delauney_boundary
+from Faster_Delaunay import delaunay_boundary
 from path_finding import path_finding
 from splines import generate_increment_on_path
 import numpy as np
@@ -72,7 +72,7 @@ def control(cones: List[dict], mode: str = "autocross", lap: Optional[int] = Non
                 distance_threshold_for_same_side:  # 3 - 1
             new_oranges.append(np.average([oranges[3], oranges[1]], axis=1))
 
-    triangles, cones = delauney_boundary(cones)
+    triangles, cones = delaunay_boundary(cones)
     midpoints = path_finding(triangles, cones)
     target_point = generate_increment_on_path(midpoints)
     theta = np.arctan(target_point[0] / target_point[1])
