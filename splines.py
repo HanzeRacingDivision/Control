@@ -3,8 +3,8 @@ from scipy.signal import bspline
 import numpy as np
 
 
-def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float = 0.05,
-                               max_midpoints_considered: int = 3):
+def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float = 0.1,
+                               max_midpoints_considered: int = 5):
     """
     This function takes an array of midpoints and generates a new point along the path, described by these midpoints.
     If there is at least two midpoints, then we generate a cubic spline that fits the first few midpoints and our
