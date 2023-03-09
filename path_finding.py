@@ -43,13 +43,13 @@ def path_finding(triangles: np.ndarray, cones: List[dict]):
     distances = [p[0]**2 + p[1]**2 for p in midpoints]
     idx = distances.index(min(distances))
     current_midpoint = midpoints[idx]
-    used_indexes = [idx]
+    used_indices = [idx]
     ordered_midpoints = [current_midpoint]
     for _ in range(1, len(midpoints)):
         next_idx = None
         next_distance = np.infty
         for j in range(len(midpoints)):
-            if j in used_indexes:
+            if j in used_indices:
                 continue
             t = np.sqrt((midpoints[j][0] - current_midpoint[0]) ** 2 + (midpoints[j][1] - current_midpoint[1]) ** 2)
             if t < next_distance:
@@ -58,6 +58,6 @@ def path_finding(triangles: np.ndarray, cones: List[dict]):
         if next_idx is not None:
             current_midpoint = midpoints[next_idx]
             ordered_midpoints.append(current_midpoint)
-            used_indexes.append(next_idx)
+            used_indices.append(next_idx)
 
     return np.array(ordered_midpoints)

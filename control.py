@@ -27,7 +27,7 @@ def control(cones: List[dict], mode: str = "autocross", lap: Optional[int] = Non
                     break
         oranges = []
 
-    if len(oranges) == 0 and on_finishing_sprint:
+    """if len(oranges) == 0 and on_finishing_sprint:
         ...  # we have lost track of the orange cones and should probably brake
     if len(oranges) == 1:
         ...
@@ -70,11 +70,11 @@ def control(cones: List[dict], mode: str = "autocross", lap: Optional[int] = Non
             new_oranges.append(np.average([oranges[3], oranges[2]], axis=1))
         if np.sqrt((oranges[3][0] - oranges[2][0]) ** 2 + (oranges[3][1] - oranges[2][1]) ** 2) < \
                 distance_threshold_for_same_side:  # 3 - 1
-            new_oranges.append(np.average([oranges[3], oranges[1]], axis=1))
+            new_oranges.append(np.average([oranges[3], oranges[1]], axis=1))"""
 
     triangles, cones = delaunay_boundary(cones)
     midpoints = path_finding(triangles, cones)
-    target_point = generate_increment_on_path(midpoints)
+    target_point, max_theta = generate_increment_on_path(midpoints)
     theta = np.arctan(target_point[0] / target_point[1])
 
     return theta

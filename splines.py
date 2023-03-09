@@ -1,10 +1,11 @@
 from scipy.interpolate import splprep, splev
 from scipy.signal import bspline
 import numpy as np
+from typing import Tuple
 
 
-def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float = 0.1,
-                               max_midpoints_considered: int = 5):
+def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float = 0.05,
+                               max_midpoints_considered: int = 5) -> Tuple[np.array, float]:
     """
     This function takes an array of midpoints and generates a new point along the path, described by these midpoints.
     If there is at least two midpoints, then we generate a cubic spline that fits the first few midpoints and our
@@ -28,6 +29,13 @@ def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float 
         mytck, myu = splprep([midpoints[:, 0], midpoints[:, 1]])
         xnew, ynew = splev([distance_increment], mytck)
         xnew, ynew = xnew[0], ynew[0]
+        xs, ys = splev(np.linspace(0, 1, num=int(1 / distance_increment)), mytck)
+        xys = np.ndarray((xs.shape[0], 2))
+        xys[:, 0] = xs
+        xys[:, 1] = ys
+        # a = np.dstack(xs[1:-1] - xs[:-2], ys[1:-1] - ys[:-2])
+        # b = np.dstack(xs[2:] - xs[1:-1], ys[2:] - ys[1:-1])
+        max_theta = 0  # np.arccos()
     elif midpoints.shape[0] == 2:
         # x = a * (y ** 2) + b * y
 
@@ -38,12 +46,15 @@ def generate_increment_on_path(midpoints: np.ndarray, distance_increment: float 
 
         ynew = distance_increment
         xnew = a * (ynew ** 2) + b * ynew
+        max_theta = np.arccos(0)
     elif midpoints.shape[0] == 1:
         # we move an incremental step on the line towards the point
         x, y = midpoints[1][0], midpoints[1][1]
         xnew = x * distance_increment
         ynew = y * distance_increment
+        max_theta = np.arccos(0)
     else:
-        xnew, ynew = distance_increment, 0  # move straight
+        xnew, ynew = 0, distance_increment  # move straight
+        max_theta = 0
 
-    return np.array([xnew, ynew])
+    return np.array([xnew, ynew]), max_theta
