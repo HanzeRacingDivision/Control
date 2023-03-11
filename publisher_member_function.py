@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Float32
 
 import os
 cwd = os.getcwd()
@@ -29,8 +29,8 @@ class MinimalPublisher(Node):
                    {"Label": "Blue", "Zpos": None, "Ypos": 3.42, "Xpos": 2.88, "Time": None},  # F
                    {"Label": "Yellow", "Zpos": None, "Ypos": 4.98, "Xpos": 3.16, "Time": None}]  # G
         theta = control(example)
-        msg = String()
-        msg.data = str(theta)
+        msg = Float32()
+        msg.data = theta
         self.publisher_.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1
